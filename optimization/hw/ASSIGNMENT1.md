@@ -280,7 +280,7 @@ $$
 For the given matrix of size $n * T$, every value has a lower bound $\geq 0$, and the upper bound for each line $i$ cannot exceed its capacity $\beta_i$ if it’s still usable, or is set to zero once past the last usable month.
 #### <u>Collab notebook usage</u>
 
-I've implemented two different ways of running the function `maximize_excess_funds`, one is to enter each of the following variables manually and one is to modify the preset data dictionary to enter the values:
+The function `maximize_excess_funds` runs based on the following inputted values
 
 ```
 T						# number of months
@@ -293,8 +293,6 @@ r2					# array of each r2 for each credit line
 r3					# array of each r3 for each credit line
 ```
 
-The function can then be called to solve the function and will output the maximum excess funds amount
-
 --------
 
 > ## AI usage
@@ -302,7 +300,6 @@ The function can then be called to solve the function and will output the maximu
 The coding, writeup and calculations for `Problem1`,  `Problem2`, `Problem3`, `Problem4` were all done individually. However, while attempting `Problem 5` I was able to formulate my own functions, but had trouble formulating these functions into gurobi constraints, so I utilized GPT mainly to learn how to dynamically calculate and add constraints that were not as simple as the previous problems. Most of the code was still handwritten, the parts that used the help of **Chatgpt** are:
 
 ```python
-# Last usable month for each line so all repayments finish by T
 last_use = []
 for i in lines:
     max_lag = 0
@@ -310,8 +307,6 @@ for i in lines:
     if r2[i] > 0: max_lag = max(max_lag, 2)
     if r3[i] > 0: max_lag = max(max_lag, 3)
     last_use.append(T - max_lag if max_lag > 0 else T)
-
-# Per-month borrowing caps
 for i in lines:
     for t in months:
         borrow[i, t].UB = beta[i] if t <= last_use[i] else 0
