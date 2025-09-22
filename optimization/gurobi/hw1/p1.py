@@ -1,14 +1,14 @@
 import gurobipy as gp
 from gurobipy import GRB
 
-model = gp.Model("oil")
+model = gp.Model("Oil")
 
-#decision Variables
+# Decision variables
 x = model.addVar(vtype=GRB.INTEGER, name="crude_oil", lb=0)
 a = model.addVar(vtype=GRB.INTEGER, name="aviation_oil", lb=0)
 h = model.addVar(vtype=GRB.INTEGER, name="heating_oil", lb=0)
 
-# Objective Function
+# Objective function
 model.setObjective(10*x + 70*a + 50*h, GRB.MAXIMIZE)
 
 # Constraints
